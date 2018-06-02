@@ -7,24 +7,79 @@ namespace Composer\Autoload;
 class ComposerStaticInit3f1f591bda07d056ca304b6077643909
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Session\\' => 8,
+        ),
         'R' => 
         array (
             'RedBeanPHP\\' => 11,
         ),
+        'P' => 
+        array (
+            'Payment\\' => 8,
+        ),
         'M' => 
         array (
             'Main\\' => 5,
+            'Mail\\' => 5,
+        ),
+        'F' => 
+        array (
+            'Form\\' => 5,
+        ),
+        'D' => 
+        array (
+            'Database\\' => 9,
+        ),
+        'C' => 
+        array (
+            'Complete\\' => 9,
+            'Code\\' => 5,
+            'Calculator\\' => 11,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Session\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Session',
+        ),
         'RedBeanPHP\\' => 
         array (
             0 => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP',
         ),
+        'Payment\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Main/Payment',
+        ),
         'Main\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Main',
+        ),
+        'Mail\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Mail',
+        ),
+        'Form\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Main/Form',
+        ),
+        'Database\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Database',
+        ),
+        'Complete\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Main/Complete',
+        ),
+        'Code\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Main/Code',
+        ),
+        'Calculator\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Main/Calculator',
         ),
     );
 

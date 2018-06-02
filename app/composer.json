@@ -1,7 +1,15 @@
 {
   "autoload": {
     "psr-4": {
-      "Main\\": "src/Main/"
+      "Database\\": "src/Database/",
+      "Mail\\": "src/Mail/",
+      "Calculator\\": "src/Main/Calculator/",
+      "Code\\": "src/Main/Code/",
+      "Complete\\": "src/Main/Complete/",
+      "Form\\": "src/Main/Form/",
+      "Payment\\": "src/Main/Payment/",
+      "Main\\": "src/Main/",
+      "Session\\": "src/Session/"
     }
   },
   "require": {

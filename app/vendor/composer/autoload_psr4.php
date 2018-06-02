@@ -6,6 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Session\\' => array($baseDir . '/src/Session'),
     'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
+    'Payment\\' => array($baseDir . '/src/Main/Payment'),
     'Main\\' => array($baseDir . '/src/Main'),
+    'Mail\\' => array($baseDir . '/src/Mail'),
+    'Form\\' => array($baseDir . '/src/Main/Form'),
+    'Database\\' => array($baseDir . '/src/Database'),
+    'Complete\\' => array($baseDir . '/src/Main/Complete'),
+    'Code\\' => array($baseDir . '/src/Main/Code'),
+    'Calculator\\' => array($baseDir . '/src/Main/Calculator'),
 );
