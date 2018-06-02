@@ -3,7 +3,7 @@
 use Calculator\Calculator as Calculator;
 use Form\Form as Form;
 use Code\Code as Code;
-use Payment\Payment as Paym;
+use Payment\Payment as paym;
 use Complete\Complete as Comp;
 
 class Main

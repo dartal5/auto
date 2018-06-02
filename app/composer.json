@@ -1,6 +1,7 @@
 {
   "autoload": {
     "psr-4": {
+      "Run\\": "src/",
       "Database\\": "src/Database/",
       "Mail\\": "src/Mail/",
       "Calculator\\": "src/Main/Calculator/",

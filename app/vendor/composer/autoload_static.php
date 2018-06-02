@@ -13,6 +13,7 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         ),
         'R' => 
         array (
+            'Run\\' => 4,
             'RedBeanPHP\\' => 11,
         ),
         'P' => 
@@ -44,6 +45,10 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         'Session\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Session',
+        ),
+        'Run\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'RedBeanPHP\\' => 
         array (

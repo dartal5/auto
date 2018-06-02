@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Session\\' => array($baseDir . '/src/Session'),
+    'Run\\' => array($baseDir . '/src'),
     'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
     'Payment\\' => array($baseDir . '/src/Main/Payment'),
     'Main\\' => array($baseDir . '/src/Main'),
