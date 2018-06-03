@@ -19,6 +19,7 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         'P' => 
         array (
             'Payment\\' => 8,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -57,6 +58,10 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         'Payment\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Main/Payment',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Main\\' => 
         array (

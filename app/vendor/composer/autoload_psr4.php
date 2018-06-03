@@ -10,6 +10,7 @@ return array(
     'Run\\' => array($baseDir . '/src'),
     'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
     'Payment\\' => array($baseDir . '/src/Main/Payment'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Main\\' => array($baseDir . '/src/Main'),
     'Mail\\' => array($baseDir . '/src/Mail'),
     'Form\\' => array($baseDir . '/src/Main/Form'),
