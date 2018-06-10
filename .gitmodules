@@ -1,3 +1,6 @@
 [submodule "app/vendor/gabordemooij/redbean"]
 	path = app/vendor/gabordemooij/redbean
 	url = https://github.com/gabordemooij/redbean.git
+[submodule "app/vendor/phpmailer/phpmailer"]
+	path = app/vendor/phpmailer/phpmailer
+	url = https://github.com/PHPMailer/PHPMailer.git
