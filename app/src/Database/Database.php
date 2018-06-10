@@ -9,9 +9,14 @@ class Database
     private static $login = 'root';
     private static $pass = '';
 
+    public static function close()
+    {
+        R::close();
+    }
+
     public static function connect()
     {
-        R::setup( 'mysql:host='.Database::$host.';dbname='.Database::$dbname, Database::$login, Database::$pass );
+        R::setup( 'mysql:host='.Database::$host.';dbname='.Database::$dbname, Database::$login, Database::$pass, "true" );
     }
 
     public static function getAllCars()

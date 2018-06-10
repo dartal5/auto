@@ -1,7 +1,7 @@
 <?php namespace Run;
 
-use Session\Session as Session;
 use Main\Main as Main;
+use Database\Database as Db;
 
 class Run
 {
@@ -30,20 +30,28 @@ class Run
         switch($step)
         {
             case 'calc': {
-                return $_SESSION["order"]->calc($args);
+                $res = $_SESSION["order"]->calc($args);
+                break;
             }
             case 'form': {
-                return $_SESSION["order"]->form($args);
+                $res = $_SESSION["order"]->form($args);
+                break;
             }
             case 'code': {
-                return $_SESSION["order"]->code($args);
+                $res = $_SESSION["order"]->code($args);
+                break;
             }
             case 'paym': {
-                return $_SESSION["order"]->paym($args);
+                $res = $_SESSION["order"]->paym();
+                break;
             }
             case 'comp': {
-                return $_SESSION["order"]->comp($args);
+                $res = $_SESSION["order"]->comp($args);
+                \Session\Session::destroy();
+                break;
             }
         }
+        return $res;
     }
+
 }

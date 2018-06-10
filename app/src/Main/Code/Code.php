@@ -15,6 +15,8 @@ class Code
     }
 
     public function set($email) {
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) throw new \Exception("___ Wrong email " . $email . " ___");
+
         $this->code = substr(str_shuffle(Code::ALPHABET), 0, Code::LENGTH);
         Mail::sendCode($email, $this->code);
     }

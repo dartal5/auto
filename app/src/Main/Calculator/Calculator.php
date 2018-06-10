@@ -20,6 +20,7 @@ class Calculator
 
         Db::connect();
         $data = Db::getCarPriceCoeffs($id);
+
         if($data === false) throw new \InvalidArgumentException("___ Wrong id " . $id . " ___");
         if($data["status"] == 0) throw new \InvalidArgumentException("___ Auto is unavaliable  ___");
 
@@ -27,6 +28,7 @@ class Calculator
         $this->data["id"] = $id;
         $this->data["term"] = $term;
         $this->data["price"] = $data["base_coeff"] * $data["class_coeff"] * $data["transmission_coeff"] * $data["type_coeff"] * $term;
+
     }
 
     public function getData()

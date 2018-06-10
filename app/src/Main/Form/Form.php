@@ -34,7 +34,7 @@ class Form
         $this->data["category"] = $category;
     }
 
-    function getData()
+    public function getData()
     {
         return $this->data;
     }

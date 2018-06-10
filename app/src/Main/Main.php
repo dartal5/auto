@@ -71,10 +71,10 @@ class Main
         return $this->code->getData($args);
     }
 
-    public function paym(array $args)
+    public function paym()
     {
         if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step paym ___");
-        return Paym::set($args);
+        return Paym::set($this->calc->getData()["price"]);
     }
 
     public function comp(array $args)
@@ -90,6 +90,7 @@ class Main
         $date_next = date('Y-m-d H:i:s', strtotime($date . ' +' . $this->calc->getData()["term"].' day'));
 
         Db::addOrder($form_data["name"], $form_data["surname"], $form_data["email"], $form_data["exp"], $form_data["expna"], $form_data["category"], $date, $date_next);
+
 
         unset($this->calc);
         unset($this->form);
