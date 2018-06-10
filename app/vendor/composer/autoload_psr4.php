@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Session\\' => array($baseDir . '/src/Session'),
     'Run\\' => array($baseDir . '/src'),
     'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
@@ -14,6 +16,8 @@ return array(
     'Main\\' => array($baseDir . '/src/Main'),
     'Mail\\' => array($baseDir . '/src/Mail'),
     'Form\\' => array($baseDir . '/src/Main/Form'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Database\\' => array($baseDir . '/src/Database'),
     'Complete\\' => array($baseDir . '/src/Main/Complete'),
     'Code\\' => array($baseDir . '/src/Main/Code'),

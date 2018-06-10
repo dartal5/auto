@@ -1,78 +1,99 @@
 <?php namespace Main;
 
+use Database\Database as Db;
 use Calculator\Calculator as Calculator;
 use Form\Form as Form;
 use Code\Code as Code;
-use Payment\Payment as paym;
-use Complete\Complete as Comp;
+use Payment\Payment as Paym;
 
 class Main
 {
-
-    public function calc()
-    {
-
-    }
-
-    public function form()
-    {
-
-    }
-
-    public function code()
-    {
-
-    }
-
-    public function paym()
-    {
-
-    }
-
-    public function comp()
-    {
-
-    }
-
-
     private $calc;
     private $form;
     private $code;
-    private $paym;
-    private $comp;
 
-    private function getCalc() : Calculator { return $this->calc; }
-    private function isSetCalc() : bool { return isset($this->calc); }
-    private function setCalc(array $args)
+    public function calc(array $args)
     {
-        $this->calc = new Calculator($args);
+        if(!isset($this->calc))
+        {
+            $this->calc = new Calculator($args);
+        }
+        else
+        {
+            unset($this->form);
+            unset($this->code);
+            unset($this->paym);
+            unset($this->comp);
+            $this->calc->set($args);
+        }
+        return $this->calc->getData();
     }
 
-    private function getForm() : Form { return $this->form; }
-    private function isSetForm() : bool { return isset($this->form); }
-    private function setForm(array $args)
+    public function form(array $args)
     {
-        $this->form = new Form($args);
+        if(isset($this->calc))
+        {
+            if(!isset($this->form))
+            {
+                $this->form = new Form($args);
+            }
+            else
+            {
+                unset($this->code);
+                unset($this->paym);
+                unset($this->comp);
+                $this->form->set($args);
+            }
+        }
+        else throw new \Exception("___ Bad step form ___");
+
+        if(isset($this->calc) && isset($this->form))
+        {
+            if(!isset($this->code))
+            {
+                $this->code = new Code($this->form->getData()["email"]);
+            }
+            else
+            {
+                unset($this->paym);
+                unset($this->comp);
+                $this->code->set($this->form->getData()["email"]);
+            }
+        }
+        else throw new \Exception("___ Bad step form ___");
+
+        return $this->form->getData();
     }
 
-    private function getCode() : Code { return $this->code; }
-    private function isSetCode() : bool { return isset($this->code); }
-    private function setCode(array $args)
+    public function code(array $args)
     {
-        $this->code = new Code($args);
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step code ___");
+        return $this->code->getData($args);
     }
 
-    private function getPaym() : Paym { return $this->paym; }
-    private function isSetPaym() : bool { return isset($this->paym); }
-    private function setPaym(array $args)
+    public function paym(array $args)
     {
-        $this->paym = new Paym($args);
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step paym ___");
+        return Paym::set($args);
     }
 
-    private function getComp() : Comp { return $this->comp; }
-    private function isSetComp() : bool { return isset($this->comp); }
-    private function setComp(array $args)
+    public function comp(array $args)
     {
-        $this->comp = new Comp($args);
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step comp ___");
+
+
+
+        Db::changeCarStatus($this->calc->getData()["id"], 0);
+        $form_data = $this->form->getData();
+
+        $date = date("Y-m-d");
+        $date_next = date('Y-m-d H:i:s', strtotime($date . ' +' . $this->calc->getData()["term"].' day'));
+
+        Db::addOrder($form_data["name"], $form_data["surname"], $form_data["email"], $form_data["exp"], $form_data["expna"], $form_data["category"], $date, $date_next);
+
+        unset($this->calc);
+        unset($this->form);
+        unset($this->code);
+        unset($this->paym);
     }
 }

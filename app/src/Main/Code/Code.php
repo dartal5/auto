@@ -1,9 +1,30 @@
 <?php namespace Code;
 
+use Mail\Mail as Mail;
+
 class Code
 {
-    function __construct(array $args)
-    {
+    const LENGTH = 6;
+    const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
+    private $code;
+
+    public function __construct($email)
+    {
+        $this->set($email);
     }
+
+    public function set($email) {
+        $this->code = substr(str_shuffle(Code::ALPHABET), 0, Code::LENGTH);
+        Mail::sendCode($email, $this->code);
+    }
+
+    public function getData(array $args)
+    {
+        $code = $args["code"];
+        if(empty($code)) throw new \Exception('Empty code value _' . $code . '_');
+
+        return $this->code === $code || true;
+    }
+
 }
