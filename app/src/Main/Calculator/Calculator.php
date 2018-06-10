@@ -8,6 +8,11 @@ class Calculator
 
     function __construct(array $args)
     {
+        $this->calculate($args);
+    }
+
+    public function calculate(array $args)
+    {
         $id = $args["id"];
         $term = $args["term"];
 
