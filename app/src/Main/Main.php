@@ -58,7 +58,9 @@ class Main
                 {
                     unset($this->paym);
                     unset($this->comp);
+                    echo $this->form->getData()["email"];
                     $this->code->set($this->form->getData()["email"]);
+
                 }
             }
             else throw new \Exception("___ Bad step form ___");
@@ -84,7 +86,7 @@ class Main
     public function paym()
     {
         try {
-        if(!(isset($this->calc) && isset($this->form) && isset($this->code)))
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code) && $this->code->except == true))
             throw new \Exception("___ Bad step paym ___");
         } catch (\Exception $e) {
             exit($e->getMessage());
@@ -95,7 +97,6 @@ class Main
 
     public function comp(array $args)
     {
-
         try {
         if(!(isset($this->calc) && isset($this->form) && isset($this->code)))
             throw new \Exception("___ Bad step comp ___");
@@ -103,16 +104,20 @@ class Main
             exit($e->getMessage());
         }
 
-        Db::connect();
-        Db::changeCarStatus($this->calc->getData()["id"], 0);
-        $form_data = $this->form->getData();
-        $calc_data = $this->calc->getData();
-        Db::addOrder($form_data["name"], $form_data["surname"], $form_data["email"], $form_data["exp"], $form_data["expna"], $form_data["category"], $calc_data["dateFrom"], $calc_data["dateTo"]);
-        Db::close();
+        if($args["complete"] == true) {
+            Db::connect();
+            Db::changeCarStatus($this->calc->getData()["id"], 0);
+            Db::addOrder($this->form->getData["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"]);
+            Db::close();
 
-        unset($this->calc);
-        unset($this->form);
-        unset($this->code);
-        unset($this->paym);
+            unset($this->calc);
+            unset($this->form);
+            unset($this->code);
+            unset($this->paym);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

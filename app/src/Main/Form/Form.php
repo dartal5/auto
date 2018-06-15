@@ -1,5 +1,8 @@
 <?php namespace Form;
 
+use Database\Database as Db;
+use Session\Session;
+
 class Form
 {
     private $data;
@@ -11,14 +14,28 @@ class Form
 
     public function set($args)
     {
-        $name = $args["name"];
-        $surname= $args["surname"];
-        $email = $args["email"];
-        $exp = $args["exp"];
-        $expna = $args["expna"];
-        $category = $args["category"];
-
         try {
+            $data = Db::getClient($args["id"]);
+
+            $this->data["userId"] = $args["id"];
+            $this->data["name"] = $data["name"];
+            $this->data["surname"] = $data["name"];
+            $this->data["email"] = $data["email"];
+            $this->data["exp"] = $data["exp"];
+            $this->data["expna"] = $data["expna"];
+            $this->data["category"] = $data["category"];
+        } catch(\Exception $e) {
+            exit($e->getMessage());
+        }
+
+        /*
+            $name = $args["name"];
+            $surname= $args["surname"];
+            $email = $args["email"];
+            $exp = $args["exp"];
+            $expna = $args["expna"];
+            $category = $args["category"];
+          try {
             if(empty($name))
                 throw new \Exception("___ Empty name " . $name . " ___");
             if(empty($surname))
@@ -36,13 +53,7 @@ class Form
         } catch(\Exception $e) {
             exit($e->getMessage());
         }
-
-        $this->data["name"] = $name;
-        $this->data["surname"] = $surname;
-        $this->data["email"] = $email;
-        $this->data["exp"] = $exp;
-        $this->data["expna"] = $expna;
-        $this->data["category"] = $category;
+        */
     }
 
     public function getData()

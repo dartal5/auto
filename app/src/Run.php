@@ -1,6 +1,7 @@
 <?php namespace Run;
 
 use Main\Main as Main;
+use Session\Session;
 
 class Run
 {
@@ -9,6 +10,7 @@ class Run
         $step = $args["step"];
 
         $userOrder = "order";
+
         if(!isset($_SESSION[$userOrder]))
         {
             $_SESSION[$userOrder] = new Main();
@@ -18,23 +20,23 @@ class Run
             switch($step)
             {
                 case 'calc': {
-                    $res = $_SESSION["order"]->calc($args);
+                    $res = $_SESSION[$userOrder]->calc($args);
                     break;
                 }
                 case 'form': {
-                    $res = $_SESSION["order"]->form($args);
+                    $res = $_SESSION[$userOrder]->form(["id" => $_SESSION["userId"]]);
                     break;
                 }
                 case 'code': {
-                    $res = $_SESSION["order"]->code($args);
+                    $res = $_SESSION[$userOrder]->code($args);
                     break;
                 }
                 case 'paym': {
-                    $res = $_SESSION["order"]->paym();
+                    $res = $_SESSION[$userOrder]->paym();
                     break;
                 }
                 case 'comp': {
-                    $res = $_SESSION["order"]->comp($args);
+                    $res = $_SESSION[$userOrder]->comp($args);
                     break;
                 }
                 default: {

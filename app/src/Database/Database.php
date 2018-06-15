@@ -65,6 +65,16 @@ class Database
         return $res;
     }
 
+    public static function getClient($id)
+    {
+        Database::connect();
+        $res  = R::getRow('select client.name, client.surname, client.email, client.exp, client.expna, client.category
+                               from client
+                               where client.id = :id', [':id' => $id]);
+        Database::close();
+        return $res;
+    }
+
     public static function changeCarStatus($id, $status)
     {
         Database::connect();
@@ -74,12 +84,12 @@ class Database
         Database::close();
     }
 
-    public static function addOrder($name, $surname, $email, $exp, $expna, $category, $f, $t)
+    public static function addOrder($client_id, $f, $t)
     {
         Database::connect();
-        R::exec('INSERT INTO `car_client` (`name`, `surname`, `email`, `exp`, `expna`, `category`, `from_date`, `to_date`) 
-                      VALUES (:n, :s, :e, :ex, :en, :c, :fd, :td)',
-                      [":n" => $name, ":s" => $surname, ':e' => $email, ":ex" => $exp, ":en" => $expna, ":c" => $category, ":fd" => $f, ":td" => $t]);
+        R::exec('INSERT INTO `car_client` (`client_id`, `from_date`, `to_date`) 
+                      VALUES (:client_id, :fd, :td)',
+                      [":client_id" => $client_id, ":fd" => $f, ":td" => $t]);
         Database::close();
     }
 }

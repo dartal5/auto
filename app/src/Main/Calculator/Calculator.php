@@ -39,8 +39,8 @@ class Calculator
 
         $this->data = $data;
         $this->data["id"] = $id;
-        $this->data["dateFrom"] = $dateFrom;
-        $this->data["dateTo"] = $dateTo;
+        $this->data["dateFrom"] = $dateFrom->format('Y-m-d');
+        $this->data["dateTo"] = $dateTo->format('Y-m-d');
         $this->data["term"] = $dateFrom->diff($dateTo)->format("%d");
         $this->data["price"] = $data["base_coeff"] * $data["class_coeff"] * $data["transmission_coeff"] * $data["type_coeff"] * $this->data["term"];
 

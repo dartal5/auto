@@ -6,8 +6,9 @@ class Code
 {
     const LENGTH = 6;
     const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
     private $code;
+
+    public $except = false;
 
     public function __construct($email)
     {
@@ -29,7 +30,8 @@ class Code
     public function getData(array $args)
     {
         $code = $args["code"];
-        return $this->code === $code;
+        $this->except = $this->code === $code;
+        return $this->except ;
     }
 
 }
