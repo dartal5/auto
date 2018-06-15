@@ -24,20 +24,31 @@ class Database
 
     public static function connect()
     {
-        R::setup( 'mysql:host='.Database::$host.';dbname='.Database::$dbname, Database::$login, Database::$pass, "true" );
+        try
+        {
+            R::setup( 'mysql:host='.Database::$host.';dbname='.Database::$dbname, Database::$login, Database::$pass, "true" );
+        }
+        catch (\Exception $e)
+        {
+            R::selectDatabase('default');
+        }
+
     }
 
     public static function getAllCars()
     {
+        Database::connect();
         $res = R::getAll('select 
                               car.id, car.make, car.model, car.info, car.status, car.pic as picture,
                               class.type as class_type, transmission.type as tran_type, type.type as type, type.seats, fuel.type as fuel_type,
                               baseprice.coeff as base_coeff, class.coeff as class_coeff, transmission.coeff as transmission_coeff, type.coeff as type_coeff'
                               . Database::$from_all, []);
+        Database::close();
         foreach ($res as $key=>$val)
         {
             $res[$key]["price"] = $val["base_coeff"] * $val["class_coeff"] * $val["transmission_coeff"] * $val["type_coeff"];
         }
+
         return $res;
 
     }
@@ -55,22 +66,29 @@ class Database
 
     public static function getCarPriceCoeffs($id)
     {
-        return R::getRow('select 
+        Database::connect();
+        $res  = R::getRow('select 
                               car.status, baseprice.coeff as base_coeff, class.coeff as class_coeff, transmission.coeff as transmission_coeff, type.coeff as type_coeff'
                               . Database::$from_all . '  where car.id = :id', [':id' => $id]);
+        Database::close();
+        return $res;
     }
 
     public static function changeCarStatus($id, $status)
     {
-        return R::getRow('UPDATE car
-                              SET status = :status
-                              WHERE id = :id;', ['status' => $status, ':id' => $id]);
+        Database::connect();
+        R::getRow('UPDATE car
+                        SET status = :status
+                        WHERE id = :id;', ['status' => $status, ':id' => $id]);
+        Database::close();
     }
 
     public static function addOrder($name, $surname, $email, $exp, $expna, $category, $f, $t)
     {
-        return R::exec('INSERT INTO `car_client` (`name`, `surname`, `email`, `exp`, `expna`, `category`, `from_date`, `to_date`) 
-                            VALUES (:n, :s, :e, :ex, :en, :c, :fd, :td)',
-            [":n" => $name, ":s" => $surname, ':e' => $email, ":ex" => $exp, ":en" => $expna, ":c" => $category, ":fd" => $f, ":td" => $t]);
+        Database::connect();
+        R::exec('INSERT INTO `car_client` (`name`, `surname`, `email`, `exp`, `expna`, `category`, `from_date`, `to_date`) 
+                      VALUES (:n, :s, :e, :ex, :en, :c, :fd, :td)',
+                      [":n" => $name, ":s" => $surname, ':e' => $email, ":ex" => $exp, ":en" => $expna, ":c" => $category, ":fd" => $f, ":td" => $t]);
+        Database::close();
     }
 }
