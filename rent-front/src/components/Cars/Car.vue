@@ -69,58 +69,8 @@
             <v-dialog v-model="dialog" max-width="400">
               
               <v-card>
-                <v-form 
-                  class="pl-3 pr-3"
-                  v-model="valid2"
-                >
-                  <v-text-field
-                    v-model="name"
-                    label="Name"
-                    :rules="reqRule"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                  ></v-text-field>
-                   <v-select
-                    :items="driveCats"
-                    v-model="selectDrive"
-                    label="Водійське посвідчення"
-                    single-line
-                     :rules="reqRule"
-                    required
-                  ></v-select>
-                   <v-select
-                    :items="driveExp"
-                    v-model="selectExp"
-                    label="Стаж водіння (у роках)"
-                    single-line
-                    :rules="reqRule"
-                    required
-                  ></v-select>
-                  <v-select
-                    :items="driveExp"
-                    v-model="selectExp2"
-                    label="Стаж водіння без аварій (у роках)"
-                    single-line
-                    :rules="reqRule"
-                    required
-                  ></v-select>
-                            
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn 
-                      class="success" 
-                      @click.native="sendOrder"
-                      :disabled="!valid2"
-                      >
-                      Send
-                      </v-btn>
-                  </v-card-actions>
-                </v-form>
+                <app-login-form
+                 @onSend="onSend"></app-login-form>
               </v-card>
               
             </v-dialog>
@@ -165,20 +115,10 @@ export default {
       datePickerFrom: null,
       datePickerTo: null,
       selectPicker: null,
-      selectDrive: null,
-      selectExp: null,
-      selectExp2: null,
       errorMsg: false,
       valid: false,
-      valid2: false,
       reqRule: [v => !!v || 'This field is required'],
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      ],
       dialog: false,
-      name: '',
-      email: '',
       selectItems: [
         {
           text: 'Оренда для розваг',
@@ -196,40 +136,6 @@ export default {
           text: 'Інше',
           value: 'other   '
         }
-      ],
-      driveCats: [
-        {
-          text: 'A'
-        },
-        {
-          text: 'B'
-        },
-        {
-          text: 'C'
-        },
-        {
-          text: 'D'
-        },
-        {
-          text: 'Інші - A1, B1, D1 і тд'
-        }
-      ],
-      driveExp: [
-        {
-          text: '<1'
-        },
-        {
-          text: '2'
-        },
-        {
-          text: '3'
-        },
-        {
-          text: '4'
-        },
-        {
-          text: '>5'
-        }
       ]
     }
   },
@@ -237,7 +143,7 @@ export default {
     cars() {
       return this.$store.getters.cars
     },
-    carById(){
+    carById(){   
       const id = this.id
       return this.cars.find(elem => elem.id === id)
     },
@@ -268,8 +174,13 @@ export default {
 
     firstFormClick(){
       if ( this.$refs.form.validate() && this.datePickerFrom ) {
-        this.errorMsg = false
-        this.dialog = true
+        const order = {
+          id: this.id,
+          userId: 123,
+          dateFrom: this.datePickerFrom,
+          dateTo: this.datePickerTo
+        }
+        console.log(order)
       }else{
         this.errorMsg = true
       }

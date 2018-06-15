@@ -91,6 +91,11 @@ export default {
           icon: 'home',
           title: 'Home',
           src: '/'
+        },
+        {
+          icon: 'account_box',
+          title: 'Login',
+          src: '/login'
         }
       ],
       title: 'Car rent app',

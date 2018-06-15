@@ -6,6 +6,9 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import store from './store'
+import LoginForm from './components/Auth/LoginForm'
+
+Vue.component('app-login-form', LoginForm)
 
 Vue.use(Vuetify)
 
