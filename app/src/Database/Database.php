@@ -24,13 +24,15 @@ class Database
 
     public static function connect()
     {
-        try
-        {
+        try {
             R::setup( 'mysql:host='.Database::$host.';dbname='.Database::$dbname, Database::$login, Database::$pass, "true" );
         }
-        catch (\Exception $e)
-        {
-            R::selectDatabase('default');
+        catch (\Exception $e) {
+            try {
+                R::selectDatabase('default');
+            } catch (\Exception $e) {
+                exit($e->getMessage());
+            }
         }
 
     }
@@ -51,17 +53,6 @@ class Database
 
         return $res;
 
-    }
-
-    public static function getCar($id)
-    {
-        $res = R::getRow('select 
-                              car.id, car.make, car.model, car.info, car.status, car.pic as picture,
-                              class.type as class_type, transmission.type as tran_type, type.type as type, type.seats_from, fuel.type as fuel_type,
-                              baseprice.coeff as base_coeff, class.coeff as class_coeff, transmission.coeff as transmission_coeff, type.coeff as type_coeff'
-                              . Database::$from_all . 'where car.id = :id', [':id' => $id]);
-        $res["price"] = $res["base_coeff"] * $res["class_coeff"] * $res["transmission_coeff"] * $res["type_coeff"];
-        return $res;
     }
 
     public static function getCarPriceCoeffs($id)
