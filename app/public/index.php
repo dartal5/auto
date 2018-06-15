@@ -8,7 +8,10 @@ switch($_GET["action"]) {
 
 
     case "getAllCars": {
-        exit(json_encode(\Database\Database::getAllCars()));
+        \Database\Database::connect();
+        $res = json_encode(\Database\Database::getAllCars());
+        \Database\Database::close();
+        exit($res);
     }
 }
 

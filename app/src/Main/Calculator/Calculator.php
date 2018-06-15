@@ -14,8 +14,8 @@ class Calculator
     public function set(array $args)
     {
         $id = $args["id"];
-        $data_from = $args["data_from"];
-        $data_to = $args["data_to"];
+        $data_from = $args["dateFrom"];
+        $data_to = $args["dateTo"];
 
         if(valida) throw new \Exception("___ Wrong term " . $term . " ___");
 
