@@ -6,8 +6,9 @@ class Code
 {
     const LENGTH = 6;
     const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
     private $code;
+
+    public $except = false;
 
     public function __construct($email)
     {
@@ -15,7 +16,12 @@ class Code
     }
 
     public function set($email) {
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) throw new \Exception("___ Wrong email " . $email . " ___");
+        try {
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+                throw new \Exception("___ Wrong email " . $email . " ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
 
         $this->code = substr(str_shuffle(Code::ALPHABET), 0, Code::LENGTH);
         Mail::sendCode($email, $this->code);
@@ -24,9 +30,8 @@ class Code
     public function getData(array $args)
     {
         $code = $args["code"];
-        if(empty($code)) throw new \Exception('Empty code value _' . $code . '_');
-
-        return $this->code === $code || true;
+        $this->except = $this->code === $code;
+        return $this->except ;
     }
 
 }

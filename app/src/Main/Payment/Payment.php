@@ -4,10 +4,12 @@ class Payment
 {
     static public function set($price)
     {
-        if(!isset($price)) throw new \Exception("___ Wrong price " . $price . " ___");
-        if(empty($price)) throw new \Exception("___ Wrong price " . $price . " ___");
-
-        if(!preg_match("(0|[1-9][0-9]*)", $price)) throw new \InvalidArgumentException("___ Wrong price " . $price . " ___");
+        try {
+            if(!preg_match("([1-9][0-9]*)", $price))
+                throw new \Exception("___ Wrong price " . $price . " ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
 
         $private_key = 'privatekey';
         $public_key = 'publickey';

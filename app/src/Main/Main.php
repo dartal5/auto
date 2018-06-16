@@ -31,70 +31,93 @@ class Main
 
     public function form(array $args)
     {
-        if(isset($this->calc))
-        {
-            if(!isset($this->form))
+        try {
+            if(isset($this->calc))
             {
-                $this->form = new Form($args);
+                if(!isset($this->form))
+                {
+                    $this->form = new Form($args);
+                }
+                else
+                {
+                    unset($this->code);
+                    unset($this->paym);
+                    unset($this->comp);
+                    $this->form->set($args);
+                }
             }
-            else
-            {
-                unset($this->code);
-                unset($this->paym);
-                unset($this->comp);
-                $this->form->set($args);
-            }
-        }
-        else throw new \Exception("___ Bad step form ___");
+            else throw new \Exception("___ Bad step form ___");
 
-        if(isset($this->calc) && isset($this->form))
-        {
-            if(!isset($this->code))
+            if(isset($this->calc) && isset($this->form))
             {
-                $this->code = new Code($this->form->getData()["email"]);
+                if(!isset($this->code))
+                {
+                    $this->code = new Code($this->form->getData()["email"]);
+                }
+                else
+                {
+                    unset($this->paym);
+                    unset($this->comp);
+                    echo $this->form->getData()["email"];
+                    $this->code->set($this->form->getData()["email"]);
+
+                }
             }
-            else
-            {
-                unset($this->paym);
-                unset($this->comp);
-                $this->code->set($this->form->getData()["email"]);
-            }
+            else throw new \Exception("___ Bad step form ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
         }
-        else throw new \Exception("___ Bad step form ___");
 
         return $this->form->getData();
     }
 
     public function code(array $args)
     {
-        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step code ___");
+        try {
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code)))
+            throw new \Exception("___ Bad step code ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
+
         return $this->code->getData($args);
     }
 
     public function paym()
     {
-        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step paym ___");
+        try {
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code) && $this->code->except == true))
+            throw new \Exception("___ Bad step paym ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
+
         return Paym::set($this->calc->getData()["price"]);
     }
 
     public function comp(array $args)
     {
-        if(!(isset($this->calc) && isset($this->form) && isset($this->code))) throw new \Exception("___ Bad step comp ___");
+        try {
+        if(!(isset($this->calc) && isset($this->form) && isset($this->code)))
+            throw new \Exception("___ Bad step comp ___");
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
 
+        if($args["complete"] == true) {
+            Db::connect();
+            Db::changeCarStatus($this->calc->getData()["id"], 0);
+            Db::addOrder($this->form->getData["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"]);
+            Db::close();
 
+            unset($this->calc);
+            unset($this->form);
+            unset($this->code);
+            unset($this->paym);
 
-        Db::changeCarStatus($this->calc->getData()["id"], 0);
-        $form_data = $this->form->getData();
-
-        $date = date("Y-m-d");
-        $date_next = date('Y-m-d H:i:s', strtotime($date . ' +' . $this->calc->getData()["term"].' day'));
-
-        Db::addOrder($form_data["name"], $form_data["surname"], $form_data["email"], $form_data["exp"], $form_data["expna"], $form_data["category"], $date, $date_next);
-
-
-        unset($this->calc);
-        unset($this->form);
-        unset($this->code);
-        unset($this->paym);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

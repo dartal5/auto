@@ -1,56 +1,52 @@
 <?php namespace Run;
 
 use Main\Main as Main;
-use Database\Database as Db;
+use Session\Session;
 
 class Run
 {
-    static private $method = "POST";
-    const STEPS = array('calc', 'form', 'code', 'paym', 'comp');
-
-
-    static public function step(string $method, array $args)
+    static public function step(array $args)
     {
-
-
         $step = $args["step"];
 
+        $userOrder = "order";
 
-        if($method !== Run::$method)
-            throw new \Exception(" ___ Wrong method " . $method . " ___ " );
-        if(!in_array($args["step"], Run::STEPS))
-            throw new \Exception(" ___ Wrong step " . $step . " ___ " );
-
-
-        if(!isset($_SESSION["order"]))
+        if(!isset($_SESSION[$userOrder]))
         {
-            $_SESSION["order"] = new Main();
+            $_SESSION[$userOrder] = new Main();
         }
 
-        switch($step)
-        {
-            case 'calc': {
-                $res = $_SESSION["order"]->calc($args);
-                break;
+        try {
+            switch($step)
+            {
+                case 'calc': {
+                    $res = $_SESSION[$userOrder]->calc($args);
+                    break;
+                }
+                case 'form': {
+                    $res = $_SESSION[$userOrder]->form(["id" => $_SESSION["userId"]]);
+                    break;
+                }
+                case 'code': {
+                    $res = $_SESSION[$userOrder]->code($args);
+                    break;
+                }
+                case 'paym': {
+                    $res = $_SESSION[$userOrder]->paym();
+                    break;
+                }
+                case 'comp': {
+                    $res = $_SESSION[$userOrder]->comp($args);
+                    break;
+                }
+                default: {
+                    throw new \Exception(" ___ Wrong step " . $step . " ___ " );
+                }
             }
-            case 'form': {
-                $res = $_SESSION["order"]->form($args);
-                break;
-            }
-            case 'code': {
-                $res = $_SESSION["order"]->code($args);
-                break;
-            }
-            case 'paym': {
-                $res = $_SESSION["order"]->paym();
-                break;
-            }
-            case 'comp': {
-                $res = $_SESSION["order"]->comp($args);
-                \Session\Session::destroy();
-                break;
-            }
+        } catch (\Exception $e) {
+            exit($e->getMessage());
         }
+
         return $res;
     }
 
