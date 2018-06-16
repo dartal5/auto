@@ -10,7 +10,8 @@
       "Form\\": "src/Main/Form/",
       "Payment\\": "src/Main/Payment/",
       "Main\\": "src/Main/",
-      "Session\\": "src/Session/"
+      "Session\\": "src/Session/",
+      "Login\\": "src/Login/"
     },
     "classmap": [
       "src/"

@@ -15,6 +15,7 @@ return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Main\\' => array($baseDir . '/src/Main'),
     'Mail\\' => array($baseDir . '/src/Mail'),
+    'Login\\' => array($baseDir . '/src/Login'),
     'Form\\' => array($baseDir . '/src/Main/Form'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),

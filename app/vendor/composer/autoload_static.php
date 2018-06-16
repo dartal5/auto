@@ -38,6 +38,10 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
             'Main\\' => 5,
             'Mail\\' => 5,
         ),
+        'L' => 
+        array (
+            'Login\\' => 6,
+        ),
         'F' => 
         array (
             'Form\\' => 5,
@@ -95,6 +99,10 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         array (
             0 => __DIR__ . '/../..' . '/src/Mail',
         ),
+        'Login\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Login',
+        ),
         'Form\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Main/Form',
@@ -140,6 +148,7 @@ class ComposerStaticInit3f1f591bda07d056ca304b6077643909
         'Code\\Code' => __DIR__ . '/../..' . '/src/Main/Code/Code.php',
         'Database\\Database' => __DIR__ . '/../..' . '/src/Database/Database.php',
         'Form\\Form' => __DIR__ . '/../..' . '/src/Main/Form/Form.php',
+        'Login\\Login' => __DIR__ . '/../..' . '/src/Login/Login.php',
         'Mail\\Mail' => __DIR__ . '/../..' . '/src/Mail/Mail.php',
         'Main\\Main' => __DIR__ . '/../..' . '/src/Main/Main.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',

@@ -10,6 +10,7 @@ return array(
     'Code\\Code' => $baseDir . '/src/Main/Code/Code.php',
     'Database\\Database' => $baseDir . '/src/Database/Database.php',
     'Form\\Form' => $baseDir . '/src/Main/Form/Form.php',
+    'Login\\Login' => $baseDir . '/src/Login/Login.php',
     'Mail\\Mail' => $baseDir . '/src/Mail/Mail.php',
     'Main\\Main' => $baseDir . '/src/Main/Main.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
