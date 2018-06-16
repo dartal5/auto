@@ -1,7 +1,6 @@
 <?php namespace Run;
 
 use Main\Main as Main;
-use Session\Session;
 
 class Run
 {

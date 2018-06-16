@@ -19,18 +19,17 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {
         case "step": {
-            \Run\Run::step($_POST);
+            exit(json_encode(\Run\Run::step($_POST)));
         }
         case "register": {
-            \Login\Login::register($_POST);
+            exit(json_encode(\Login\Login::register($_POST)));
         }
         case "login": {
-            \Login\Login::login($_POST);
+            exit(json_encode(\Login\Login::login($_POST)));
         }
         case "logout": {
-            \Login\Login::logout();
+            exit(json_encode(\Login\Login::logout()));
         }
     }
-
 }
 
