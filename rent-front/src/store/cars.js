@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
     state: {
         cars: [
@@ -11,8 +13,7 @@ export default {
               class_type: 'business',
               train_type: 'auto',
               type: 'sedan',
-              seats_from: 4,
-              seats_to: 6,
+              seats: 4,
               fuel_type: 'petrol',
               base_coeff: 400,
               class_coeff: 2,
@@ -30,8 +31,7 @@ export default {
                 class_type: 'business',
                 train_type: 'auto',
                 type: 'sedan',
-                seats_from: 1,
-                seats_to: 6,
+                seats: 4,
                 fuel_type: 'diesel',
                 base_coeff: 300,
                 class_coeff: 2,
@@ -49,8 +49,7 @@ export default {
                 class_type: 'sport',
                 train_type: 'auto',
                 type: 'sedan',
-                seats_from: 1,
-                seats_to: 4,
+                seats: 5,
                 fuel_type: 'petrol',
                 base_coeff: 400,
                 class_coeff: 2,
@@ -67,7 +66,15 @@ export default {
 
     },
     actions: {
-
+       getCars({commit}) {
+            axios.get('http://localhost/app/public/index.php?action=getAllCars')
+                 .then(response => {
+                     console.log(response)
+                 })
+                 .catch(error => {
+                     console.log(error)
+                 })
+       }
     },
     getters: {
         cars (state) {
