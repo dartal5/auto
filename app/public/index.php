@@ -5,16 +5,17 @@ require __DIR__ . '/../vendor/autoload.php';
 
 if($_SERVER["REQUEST_METHOD"] == "GET") {
     switch ($_GET["action"]) {
-        case "getAllCars":
-            {
-                exit(json_encode(\Database\Database::getAllCars()));
-            }
+        case "getAllCars": {
+            exit(json_encode(\Database\Database::getAllCars()));
+        }
+        case "getCarHistory": {
+            exit(json_encode(\Database\Database::getHistory($_GET["id"])));
+        }
+        case "getCarHistoryExtend": {
+            exit(json_encode(\Database\Database::getHistoryExtend($_GET["id"])));
+        }
     }
 }
-
-//echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "lebovski", "email" => "abcdefg@gmail.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "hellollo"]));
-//echo json_encode(\Login\Login::login(["email" => "abcdefg@gmail.com", "pass" => "hellollo"]));
-//echo $_SESSION["userId"];
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {

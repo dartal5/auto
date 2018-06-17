@@ -102,13 +102,43 @@ class Database
         Database::close();
     }
 
-    public static function addOrder($client_id, $f, $t)
+    public static function addOrder($client_id, $f, $t, $car_id)
     {
         Database::connect();
-        R::exec('INSERT INTO `car_client` (`client_id`, `from_date`, `to_date`) 
-                      VALUES (:client_id, :fd, :td)',
-                      [":client_id" => $client_id, ":fd" => $f, ":td" => $t]);
+        R::exec('INSERT INTO `car_client` (`client_id`, `from_date`, `to_date`, `car_id`) 
+                      VALUES (:client_id, :fd, :td, :car_id)',
+                      [":client_id" => $client_id, ":fd" => $f, ":td" => $t, ":car_id" => $car_id]);
         Database::close();
+    }
+
+    public static function getHistory($client_id)
+    {
+        Database::connect();
+        $res  = R::getAll('select car_client.from_date, car_client.to_date, car_client.car_id
+                               from car_client
+                               where client_id = :client_id', [':client_id' => $client_id]);
+        Database::close();
+        return $res;
+    }
+
+    public static function getHistoryExtend($client_id)
+    {
+        Database::connect();
+        $res = R::getAll('select
+                              car_client.from_date, car_client.to_date,
+                              car.id, car.make, car.model, car.info, car.status, car.pic as picture,
+                              class.type as class_type, transmission.type as tran_type, type.type as type, type.seats, fuel.type as fuel_type,
+                              baseprice.coeff as base_coeff, class.coeff as class_coeff, transmission.coeff as transmission_coeff, type.coeff as type_coeff
+                              from car 
+                              inner join class on car.class_id = class.id 
+                              inner join transmission on car.transmission_id = transmission.id 
+                              inner join type on car.type_id = type.id
+                              inner join fuel on car.fuel_id = fuel.id
+                              inner join car_client on car.id = car_client.car_id
+                              cross join baseprice
+                              where car_client.client_id = :client_id' , [":client_id" => $client_id]);
+        Database::close();
+        return $res;
     }
 
 
