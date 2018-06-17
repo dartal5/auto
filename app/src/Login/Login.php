@@ -72,4 +72,5 @@ class Login
         unset($_SESSION["userId"]);
         return(["status" => 1, "messages" => ["Logout successfuly"]]);
     }
+
 }

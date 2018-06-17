@@ -98,7 +98,7 @@ class Database
         Database::connect();
         R::getRow('UPDATE car
                         SET status = :status
-                        WHERE id = :id;', ['status' => $status, ':id' => $id]);
+                        WHERE id = :id;', [':status' => $status, ':id' => $id]);
         Database::close();
     }
 
