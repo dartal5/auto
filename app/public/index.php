@@ -9,10 +9,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             exit(json_encode(\Database\Database::getAllCars()));
         }
         case "getCarHistory": {
-            exit(json_encode(\Database\Database::getHistory($_GET["id"])));
+            exit(json_encode(\Database\Database::getHistory($_SESSION["userId"])));
         }
         case "getCarHistoryExtend": {
-            exit(json_encode(\Database\Database::getHistoryExtend($_GET["id"])));
+            exit(json_encode(\Database\Database::getHistoryExtend($_SESSION["userId"])));
         }
     }
 }
