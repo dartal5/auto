@@ -10,6 +10,19 @@
         required
         ></v-text-field>
         <v-text-field
+        v-model="surname"
+        label="Surname"
+        :rules="reqRule"
+        required
+        ></v-text-field>
+        <v-text-field
+        v-model="pass"
+        label="Password"
+        :rules="passRules"
+        type="password"
+        required
+        ></v-text-field>
+        <v-text-field
         v-model="email"
         :rules="emailRules"
         label="E-mail"
@@ -44,7 +57,7 @@
         <v-spacer></v-spacer>
         <v-btn 
             class="success" 
-            @click.native="$emit('onSend', formInfo)"
+            @click.native="onRegister"
             :disabled="!valid2"
             >
             Send
@@ -59,13 +72,19 @@ export default {
     data() {
         return {
             reqRule: [v => !!v || 'This field is required'],
+            passRules: [
+                 v => !!v || 'Password is required',
+                 v => v.length > 5 || 'Enter at least 6 characters'
+            ],
             emailRules: [
-            v => !!v || 'E-mail is required',
-            v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+                v => !!v || 'E-mail is required',
+                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
             ],
             valid2: false,
             name: '',
             email: '',
+            pass: '',
+            surname: '',
             selectDrive: null,
             selectExp: null,
             selectExp2: null
@@ -78,16 +97,25 @@ export default {
         driveExp() {
             return this.$store.state.userInfo.driveExp
         },
-        formInfo() {
-             const info = {
+        
+    },
+    methods: {
+        onRegister() {
+            const user = {
+                action: 'register',
                 name: this.name,
+                surname: this.surname,
+                pass: this.pass,
                 email: this.email,
-                driveCat: this.selectDrive.text,
-                driveExp: this.selectExp.text,
-                driveExp2: this.selectExp2.text
+                category: this.selectDrive.text,
+                exp: this.selectExp.text,
+                expna: this.selectExp2.text
             }
+
+            this.$store.dispatch('registerUser', user)
             
-            return info
+
+            
         }
     }
     

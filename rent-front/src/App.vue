@@ -94,8 +94,13 @@ export default {
         },
         {
           icon: 'account_box',
+          title: 'Register',
+          src: '/register'
+        },
+         {
+          icon: 'account_box',
           title: 'Login',
-          src: '/login'
+          src: '/Login'
         }
       ],
       title: 'Car rent app',

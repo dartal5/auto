@@ -4,15 +4,19 @@ require __DIR__ . '/../vendor/autoload.php';
 \Session\Session::start();
 
 if($_SERVER["REQUEST_METHOD"] == "GET") {
+
     switch ($_GET["action"]) {
         case "getAllCars": {
             exit(json_encode(\Database\Database::getAllCars()));
+            break;
         }
         case "getCarHistory": {
-            exit(json_encode(\Database\Database::getHistory($_GET["id"])));
+            exit(json_encode(\Database\Database::getHistory($_SESSION["userId"])));
+            break;
         }
         case "getCarHistoryExtend": {
-            exit(json_encode(\Database\Database::getHistoryExtend($_GET["id"])));
+            exit(json_encode(\Database\Database::getHistoryExtend($_SESSION["userId"])));
+            break;
         }
     }
 }
@@ -26,15 +30,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {
         case "step": {
             exit(json_encode(\Run\Run::step($_POST)));
+            break;
         }
         case "register": {
-            exit(json_encode(\Login\Login::register($_POST)));
+            echo json_encode(\Login\Login::register($_POST));
+            break;
         }
         case "login": {
             exit(json_encode(\Login\Login::login($_POST)));
+            break;
         }
         case "logout": {
             exit(json_encode(\Login\Login::logout()));
+            break;
+        }
+        case "getId": {
+            exit($_SESSION["userId"]);
+            break;
         }
     }
 }

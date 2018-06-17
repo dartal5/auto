@@ -69,8 +69,8 @@
             <v-dialog v-model="dialog" max-width="400">
               
               <v-card>
-                <app-login-form
-                 @onSend="onSend"></app-login-form>
+                <app-register-form
+                 @onSend="onSend"></app-register-form>
               </v-card>
               
             </v-dialog>
