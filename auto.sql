@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 16 2018 г., 00:45
+-- Время создания: Июн 17 2018 г., 11:21
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -64,7 +64,7 @@ CREATE TABLE `car` (
 --
 
 INSERT INTO `car` (`id`, `make`, `model`, `class_id`, `transmission_id`, `type_id`, `fuel_id`, `status`, `info`, `pic`) VALUES
-(1, 'Nissan', 'Almera', 3, 2, 4, 2, 0, 'Good car with good wheels', 'pic1'),
+(1, 'Nissan', 'Almera', 3, 2, 4, 2, 1, 'Good car with good wheels', 'pic1'),
 (2, 'БМВ', '7', 4, 1, 4, 1, 1, 'Тру тачила', 'pic2');
 
 -- --------------------------------------------------------
@@ -77,25 +77,19 @@ CREATE TABLE `car_client` (
   `id` int(11) NOT NULL,
   `client_id` int(11) UNSIGNED DEFAULT NULL,
   `from_date` date DEFAULT NULL,
-  `to_date` date DEFAULT NULL
+  `to_date` date DEFAULT NULL,
+  `car_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `car_client`
 --
 
-INSERT INTO `car_client` (`id`, `client_id`, `from_date`, `to_date`) VALUES
-(1, 1, '2018-06-10', '2018-06-17'),
-(2, 1, '2018-06-10', '2018-06-17'),
-(3, 1, '2018-06-10', '2018-06-17'),
-(4, 1, '2018-06-10', '2018-06-17'),
-(5, NULL, '2018-06-16', '2018-06-18'),
-(6, NULL, '2018-06-16', '2018-06-18'),
-(7, NULL, '2018-06-16', '2018-06-18'),
-(8, NULL, '2018-06-16', '2018-06-18'),
-(9, NULL, '2018-06-16', '2018-06-18'),
-(10, NULL, '2018-06-16', '2018-06-18'),
-(11, NULL, '2018-06-16', '2018-06-18');
+INSERT INTO `car_client` (`id`, `client_id`, `from_date`, `to_date`, `car_id`) VALUES
+(1, 1, '2018-06-10', '2018-06-17', 1),
+(2, 1, '2018-06-10', '2018-06-17', 1),
+(3, 1, '2018-06-10', '2018-06-17', 1),
+(4, 1, '2018-06-10', '2018-06-17', 1);
 
 -- --------------------------------------------------------
 
@@ -132,15 +126,17 @@ CREATE TABLE `client` (
   `email` varchar(128) DEFAULT NULL,
   `exp` int(11) DEFAULT NULL,
   `expna` int(11) DEFAULT NULL,
-  `category` varchar(3) DEFAULT NULL
+  `category` varchar(3) DEFAULT NULL,
+  `pass` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `client`
 --
 
-INSERT INTO `client` (`id`, `name`, `surname`, `email`, `exp`, `expna`, `category`) VALUES
-(1, 'Alexon', 'Hueslav', 'aabc@gmail.com', 3, 1, 'B');
+INSERT INTO `client` (`id`, `name`, `surname`, `email`, `exp`, `expna`, `category`, `pass`) VALUES
+(1, 'Alexon', 'Hueslav', 'aabc@gmail.com', 3, 1, 'B', ''),
+(2, 'alex', 'lebovski', 'abcdefg@gmail.com', 3, 2, 'B', '0d489f383fceaa36d49c7318b2c95fb231484e31');
 
 -- --------------------------------------------------------
 
@@ -231,7 +227,8 @@ ALTER TABLE `car`
 --
 ALTER TABLE `car_client`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `index_foreignkey_car_client_client` (`client_id`) USING BTREE;
+  ADD KEY `index_foreignkey_car_client_client` (`client_id`) USING BTREE,
+  ADD KEY `index_foreignkey_car_client_car` (`car_id`) USING BTREE;
 
 --
 -- Индексы таблицы `class`
@@ -295,7 +292,7 @@ ALTER TABLE `class`
 -- AUTO_INCREMENT для таблицы `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `fuel`
@@ -332,6 +329,7 @@ ALTER TABLE `car`
 -- Ограничения внешнего ключа таблицы `car_client`
 --
 ALTER TABLE `car_client`
+  ADD CONSTRAINT `c_fk_car_client_car_id` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `c_fk_car_client_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 COMMIT;
 
