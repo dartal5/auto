@@ -41,7 +41,7 @@ class Login
 
         $_SESSION["userId"] = $acc["id"] + 1;
 
-        return(["status" => 1, "messages" => ["Register successfuly"]]);
+        return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Register successfuly"]]);
     }
 
     static public function login(array $args)
@@ -61,7 +61,7 @@ class Login
 
         $_SESSION["userId"] = $acc["id"];
 
-        return(["status" => 1, "messages" => ["Login successfuly"]]);
+        return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Login successfuly"]]);
     }
 
     static public function logout()
