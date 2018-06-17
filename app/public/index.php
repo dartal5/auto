@@ -44,6 +44,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             exit(json_encode(\Login\Login::logout()));
             break;
         }
+        case "getId": {
+            exit($_SESSION["userId"]);
+            break;
+        }
     }
 }
 
