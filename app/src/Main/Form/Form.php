@@ -25,7 +25,7 @@ class Form
             $this->data["expna"] = $data["expna"];
             $this->data["category"] = $data["category"];
         } catch(\Exception $e) {
-            exit($e->getMessage());
+            exit(["status" => 0, "messages" => ["You are not logged in"]]);
         }
     }
 
