@@ -17,6 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 }
 
+echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "abcd@abcd.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "abcdabcd"]));
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {
         case "step": {

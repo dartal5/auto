@@ -15,25 +15,27 @@ class Login
 
         $pass = $args["pass"];
 
+        $err_arr = ["status" => 0];
         if(empty($name))
-            return(["status" => 0, "message" => "Empty name"]);
+            $err_arr[] = (["message" => "Empty name"]);
         if(empty($surname))
-            return(["status" => 0, "message" => "Empty surname"]);
+            $err_arr[] = (["message" => "Empty surname"]);
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-            return(["status" => 0, "message" => "Wrong email"]);
+            $err_arr[] = (["message" => "Wrong email"]);
         if(!preg_match("(0|[1-9][0-9]*)", $exp))
-            return(["status" => 0, "message" => "Wrong exp"]);
+            $err_arr[] = (["message" => "Wrong exp"]);
         if(!preg_match("(0|[1-9][0-9]*)", $expna))
-            return(["status" => 0, "message" => "Wrong expna"]);
+            $err_arr[] = (["message" => "Wrong expna"]);
         if($expna > $exp)
-            return(["status" => 0, "message" => "expna > exp"]);
+            $err_arr[] = (["message" => "expna > exp"]);
         if(!in_array($category, array("A", "B", "C", "D")) )
-            return(["status" => 0, "message" => "Wrong category"]);
+            $err_arr[] = (["message" => "Wrong category"]);
         if(strlen($pass) < 6)
-            return(["status" => 0, "message" => "Pass should be at least 6 chars"]);
+            $err_arr[] = (["message" => "Pass should be at least 6 chars"]);
         $acc = Database::getClientByEmail($email);
         if($acc != false)
-            return(["status" => 0, "message" => "Account with such email already exists"]);
+            $err_arr[] = (["message" => "Account with such email already exists"]);
+        if(count($err_arr) > 1) return $err_arr;
 
         Database::addClient($name, $surname, $email, $exp, $expna, $category, sha1($pass));
 
@@ -47,14 +49,15 @@ class Login
         $email = $args["email"];
         $pass = $args["pass"];
 
+        $err_arr = ["status" => 0];
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-            return(["status" => 0, "message" => "Wrong email"]);
+            $err_arr[] = (["message" => "Wrong email"]);
         $acc = Database::getClientByEmail($email);
         if($acc == false)
-            return(["status" => 0, "message" => "Wrong pass or email"]);
-
+            $err_arr[] = (["message" => "Wrong pass or email"]);
         if($acc["pass"] != sha1($pass))
-            return(["status" => 0, "message" => "Wrong pass or email"]);
+            $err_arr[] = (["message" => "Wrong pass or email"]);
+        if(count($err_arr) > 1) return $err_arr;
 
         $_SESSION["userId"] = $acc["id"];
 
@@ -64,7 +67,7 @@ class Login
     static public function logout()
     {
         if(!isset($_SESSION["userId"]))
-            return(["status" => 0, "message" => "You are not logged in"]);
+            return([["status" => 0, "message" => "You are not logged in"]]);
 
         unset($_SESSION["userId"]);
         return(["status" => 1, "message" => "Logout successfuly"]);
