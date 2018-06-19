@@ -21,10 +21,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 }
 
-//echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "abcd@abcd.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "abcdabcd"]));
+//echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "1234@1234.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "12341234"]));
 //echo json_encode(\Login\Login::login(["email" => "abcd@abcd.com", "pass" => "abcdabcd"]));
 //\Login\Login::logout();
-//echo json_encode(\Login\Login::login(["email" => "abcd@abcd.com", "pass" => "abcdabcd123"]));
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {
@@ -45,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         }
         case "getId": {
-            exit($_SESSION["userId"]);
+            exit(isset($_SESSION["userId"]) ? $_SESSION["userId"] : "-1");
             break;
         }
     }
