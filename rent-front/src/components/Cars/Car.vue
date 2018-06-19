@@ -18,61 +18,75 @@
               <div>{{ carById.info }}</div>
             </div>
           </v-card-title>
-          <v-form ref="form" v-model="valid">
-            <div class="select-wrap">
-              <v-select
-                :items="selectItems"
-                v-model="selectPicker"
-                label="Оберіть ціль"
-                :rules="reqRule"
-                class="input-group--focused"
-                item-value="value"
-                item-text="text"
-              ></v-select>
-            </div>
-            <div class="date-wrap">
-              <div class="date-title">
-                Дата з:
+          <keep-alive>
+            <v-form ref="form" v-model="valid">
+              <div class="select-wrap">
+                <v-select
+                  :items="selectItems"
+                  v-model="selectPicker"
+                  label="Оберіть ціль"
+                  :rules="reqRule"
+                  class="input-group--focused"
+                  item-value="value"
+                  item-text="text"
+                ></v-select>
               </div>
-              <v-date-picker
-                class="mb-4"
-                v-model="datePickerFrom" 
-                full-width
-                :min="minDate"
-              ></v-date-picker>
-              <div class="date-title">
-                Дата по:
-              </div>
-              <v-date-picker
-                v-model="datePickerTo" 
-                full-width
-                :min="datePickerFrom"
-              ></v-date-picker>
-              <transition name="fade">
-                <div class="error-message" name="fade" v-if="errorMsg">
-                  Ціль та дата початку оренди - обовязкові!
+              <div class="date-wrap">
+                <div class="date-title">
+                  Дата з:
                 </div>
-              </transition>
-             
-            </div>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                :to="'/car/' + carById.id" 
-                :disabled="!carById.status" 
-                color="success"
-                @click.native.stop="firstFormClick"
-              >Замовити</v-btn>
-            </v-card-actions>
-          </v-form>
+                <v-date-picker
+                  class="mb-4"
+                  v-model="datePickerFrom" 
+                  full-width
+                  :min="minDate"
+                ></v-date-picker>
+                <div class="date-title">
+                  Дата по:
+                </div>
+                <v-date-picker
+                  v-model="datePickerTo" 
+                  full-width
+                  :min="datePickerFrom"
+                ></v-date-picker>
+              
+              </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  :to="'/car/' + carById.id" 
+                  :disabled="!carById.status" 
+                  color="success"
+                  @click.native.stop="onForm"
+                >Замовити</v-btn>
+              </v-card-actions>
+            </v-form>
+          </keep-alive>
 
             <v-dialog v-model="dialog" max-width="400">
               
               <v-card>
-                <app-register-form
-                 @onSend="onSend"></app-register-form>
+                <div class="pa-4">
+                  <h2 class="tac">
+                      You need to be authorized to make an order
+                  </h2>           
+                  <v-layout row justify-center class="mt-2">
+                    <div>
+                      <v-btn
+                      :to="'/login/'" color="success"
+                      >
+                      Login
+                      </v-btn>
+                      <v-btn
+                        :to="'/regisster'"
+                        color="error"
+                      >
+                      Register
+                      </v-btn>
+                    </div>
+                  </v-layout>      
+                </div>
               </v-card>
-              
             </v-dialog>
 
          
@@ -172,17 +186,24 @@ export default {
   },
   methods: {
 
-    firstFormClick(){
+    onForm(){
       if ( this.$refs.form.validate() && this.datePickerFrom ) {
+        const user = this.$store.state.user.user
+
         const order = {
+          action: 'step',
+          step: 'calculator',
           id: this.id,
-          userId: 123,
           dateFrom: this.datePickerFrom,
           dateTo: this.datePickerTo
         }
-        console.log(order)
+
+        this.$store.dispatch('sendOrderStep1')
+       
+        
       }else{
-        this.errorMsg = true
+        this.$store.commit('clearMessage')
+        this.$store.commit('setMessage', 'Start date and purpose are required')
       }
     },
 
@@ -247,19 +268,9 @@ export default {
     font-size: 20px;
     margin: 10px 0;
   }
-  
-  .error-message{
-    font-size: 13px;
-    margin-top: 10px;
-    color: #ff5252;
+  .tac{
+    text-align: center;
   }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to{
-  opacity: 0;
-}
 
 
 </style>

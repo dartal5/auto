@@ -23,5 +23,6 @@ new Vue({
   template: '<App/>',
   created() {
     store.dispatch('getCars')
+    store.dispatch('autoLogin')
   }
 })

@@ -32,15 +32,13 @@
         :items="driveCats"
         v-model="selectDrive"
         label="Водійське посвідчення"
-        single-line
-            :rules="reqRule"
+        :rules="reqRule"
         required
         ></v-select>
         <v-select
         :items="driveExp"
         v-model="selectExp"
         label="Стаж водіння (у роках)"
-        single-line
         :rules="reqRule"
         required
         ></v-select>
@@ -48,7 +46,6 @@
         :items="driveExp"
         v-model="selectExp2"
         label="Стаж водіння без аварій (у роках)"
-        single-line
         :rules="reqRule"
         required
         ></v-select>
