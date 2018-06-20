@@ -47,6 +47,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             exit(json_encode(\Login\Login::logout()));
             break;
         }
+        case "updateInfo": {
+            exit(json_encode(\Login\Login::updateInfo($_POST)));
+            break;
+        }
+        case "updatePass": {
+            exit(json_encode(\Login\Login::updatePass($_POST)));
+            break;
+        }
         case "getId": {
             exit(isset($_SESSION["userId"]) ? $_SESSION["userId"] : "-1");
             break;

@@ -141,12 +141,21 @@ class Database
         return $res;
     }
 
-    public static function changeClient($id)
+    public static function changeClient($id, $name, $surname, $email, $exp, $expna, $category)
     {
         Database::connect();
-
+        R::getRow('UPDATE client
+                        SET name = :name, surname = :surname, email = :email, exp = :exp, expna = :expna, category = :category
+                        WHERE id = :id;', [':id' => $id, ':name' => $name, ':surname' => $surname, ':email' => $email, ':exp' => $exp, ':expna' => $expna, ':category' => $category]);
         Database::close();
     }
 
-
+    public static function changeClientPass($id, $pass)
+    {
+        Database::connect();
+        R::getRow('UPDATE client
+                        SET pass = :pass
+                        WHERE id = :id;', [':id' => $id, ':pass' => $pass]);
+        Database::close();
+    }
 }
