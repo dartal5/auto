@@ -37,9 +37,9 @@ class Login
             $err_arr["messages"][] = "Account with such email already exists";
         if(!empty($err_arr["messages"])) return $err_arr;
 
-        Database::addClient($name, $surname, $email, $exp, $expna, $category, sha1($pass));
+        $acc = Database::addClient($name, $surname, $email, $exp, $expna, $category, sha1($pass));
 
-        $_SESSION["userId"] = intval($acc["id"]) + 1;
+        $_SESSION["userId"] = $acc["id"];
 
         return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Register successfuly"]]);
     }

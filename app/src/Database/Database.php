@@ -90,7 +90,9 @@ class Database
         R::exec('INSERT INTO `client` (`name`, `surname`, `email`, `exp`, `expna`, `category`, `pass`) 
                       VALUES (:name, :surname, :email, :exp, :expna, :category, :pass)',
                      [":name" => $name, ":surname" => $surname, ":email" => $email, ":exp" => $exp, ":expna" => $expna, ":category" => $category, ":pass" => $pass]);
+        $res =  Database::getClientByEmail($email);
         Database::close();
+        return $res;
     }
 
     public static function changeCarStatus($id, $status)
