@@ -7,7 +7,7 @@ class Mail
     static public function sendCode($email, $code)
     {
         $mail = new PHPMailer;
-        $mail->setFrom('SuperMegaDev', 'Auto');
+        $mail->setFrom('SuperMegaDev@gmail.com', 'Auto');
         $mail->addAddress($email, 'My Friend');
         $mail->Subject  = 'It is your code';
         $mail->Body     = $code;
