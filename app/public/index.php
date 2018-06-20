@@ -18,6 +18,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             exit(json_encode(\Database\Database::getHistoryExtend($_SESSION["userId"])));
             break;
         }
+        case "getClient": {
+            exit(json_encode(\Database\Database::getClient($_SESSION["userId"])));
+            break;
+        }
     }
 }
 
@@ -27,7 +31,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 
 //echo json_encode(\Run\Run::step(["step" => "calc", "id" => "1", "dateFrom" => "2018-06-20", "dateTo" => "2018-06-20"]));
 //echo json_encode(\Run\Run::step(["step" => "form"]));
-
+//echo json_encode(\Login\Login::updateInfo(["name" => "Alex", "surname" => "dym", "email" => "1234@1234.com", "exp" => 3, "expna" => 2, "category" => "B"]));
+//echo json_encode(\Login\Login::updatePass(["newPass" => "123456", "repeatPass" => "123456"]));
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     switch($_POST["action"]) {
