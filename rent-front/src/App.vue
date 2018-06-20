@@ -65,7 +65,7 @@
         v-for="link in links"
         :key="link.title"
       >
-        <v-btn flat :to="link.src">
+        <v-btn flat :to="link.src" @click="link.title == 'Logout' ? onLogout() : ''">
           <v-icon left>{{ link.icon }}</v-icon>
           {{ link.title }}
         </v-btn>
@@ -74,6 +74,17 @@
     <v-content>
       <router-view/>
     </v-content>
+
+    <v-snackbar
+      :timeout="5000"
+      :bottom="true"
+      :multi-line="'multi-line'"
+      :vertical="'vertical'"
+      v-model="isVisibleMsg"
+    >
+      {{ message }}
+      <v-btn flat color="pink" @click.native="clearMessage">Close</v-btn>
+    </v-snackbar>
 
     <v-footer app>
       <span>&copy; 2017</span>
@@ -86,18 +97,6 @@ export default {
   data () {
     return {
       drawer: true,
-      links: [
-        {
-          icon: 'home',
-          title: 'Home',
-          src: '/'
-        },
-        {
-          icon: 'account_box',
-          title: 'Login',
-          src: '/login'
-        }
-      ],
       title: 'Car rent app',
       paramsModel: {
         status: null,
@@ -110,12 +109,66 @@ export default {
     }
   },
   computed: {
-    cars (){
-      return this.$store.getters.cars
+    links() {
+      if( this.$store.state.user.user ){
+        return [
+          {
+            icon: 'home',
+            title: 'Home',
+            src: '/'
+          },
+          {
+            icon: 'business_center',
+            title: 'My orders',
+            src: '/orders'
+          },
+          {
+            icon: 'settings',
+            title: 'settings',
+            src: '/settings'
+          },
+          {
+            icon: 'account_box',
+            title: 'Logout',
+            src: ''
+          }
+          ]
+        } else {
+          return [
+            {
+              icon: 'home',
+              title: 'Home',
+              src: '/'
+            },
+            {
+              icon: 'account_box',
+              title: 'Register',
+              src: '/register'
+            },
+            {
+              icon: 'account_box',
+              title: 'Login',
+              src: '/Login',
+            }
+          ]
+        }
     },
     carParams (){
       return this.$store.getters.carParams
+    },
+    message() {
+      return this.$store.state.messages.message
+    },
+    isVisibleMsg: {
+      set(val){
+        this.$store.commit('clearMessage')
+      },
+      get() {
+        return this.$store.state.messages.isVisibleMsg
+      }
+      
     }
+      
   },
   methods: {
     filterCars(){
@@ -126,6 +179,12 @@ export default {
         this.paramsModel[prop] = null
       }
       this.$router.push('/')
+    },
+    clearMessage(){
+      this.$store.commit('clearMessage')
+    },
+    onLogout(){
+      this.$store.dispatch('logout')
     }
   },
   name: 'App'

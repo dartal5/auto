@@ -6,9 +6,9 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import store from './store'
-import LoginForm from './components/Auth/LoginForm'
+import RegisterForm from './components/Auth/RegisterForm'
 
-Vue.component('app-login-form', LoginForm)
+Vue.component('app-register-form', RegisterForm)
 
 Vue.use(Vuetify)
 
@@ -23,5 +23,6 @@ new Vue({
   template: '<App/>',
   created() {
     store.dispatch('getCars')
+    store.dispatch('autoLogin')
   }
 })
