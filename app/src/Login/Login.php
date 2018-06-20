@@ -39,7 +39,7 @@ class Login
 
         Database::addClient($name, $surname, $email, $exp, $expna, $category, sha1($pass));
 
-        $_SESSION["userId"] = $acc["id"] + 1;
+        $_SESSION["userId"] = intval($acc["id"]) + 1;
 
         return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Register successfuly"]]);
     }
