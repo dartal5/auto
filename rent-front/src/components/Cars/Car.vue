@@ -63,28 +63,30 @@
             </v-form>
           </keep-alive>
 
-            <v-dialog v-model="dialog" max-width="400">
+            <v-dialog v-model="codeForm" max-width="375">
               
               <v-card>
                 <div class="pa-4">
-                  <h2 class="tac">
-                      You need to be authorized to make an order
-                  </h2>           
-                  <v-layout row justify-center class="mt-2">
-                    <div>
-                      <v-btn
-                      :to="'/login/'" color="success"
-                      >
-                      Login
-                      </v-btn>
-                      <v-btn
-                        :to="'/regisster'"
-                        color="error"
-                      >
-                      Register
-                      </v-btn>
-                    </div>
-                  </v-layout>      
+                  <h2>
+                      Check your email and enter a code
+                  </h2>
+
+                  <v-layout row class="mt-2">
+                    <v-form ref="codeForm">
+                      <div>
+                        <v-text-field
+                            v-model="code"
+                            :rules="reqRule"
+                            label="Code"
+                            required
+                        ></v-text-field>
+                        <v-btn class="ml-0 mt-3" @click="onCodeForm">
+                            Send
+                        </v-btn>   
+                      </div>
+                    </v-form>
+                  </v-layout>
+                   
                 </div>
               </v-card>
             </v-dialog>
@@ -129,10 +131,10 @@ export default {
       datePickerFrom: null,
       datePickerTo: null,
       selectPicker: null,
+      code: '',
       errorMsg: false,
       valid: false,
       reqRule: [v => !!v || 'This field is required'],
-      dialog: false,
       selectItems: [
         {
           text: 'Оренда для розваг',
@@ -157,6 +159,9 @@ export default {
     cars() {
       return this.$store.getters.cars
     },
+    codeForm(){
+      return this.$store.state.orders.isVisibleCodeForm
+    },
     carById(){   
       const id = this.id
       return this.cars.find(elem => elem.id === id)
@@ -166,7 +171,7 @@ export default {
     },
     minDate(){
         let today = new Date()
-        let dd = today.getDate()
+        let dd = today.getDate() 
         let mm = today.getMonth()+1 //January is 0!
         let yyyy = today.getFullYear()
 
@@ -207,6 +212,17 @@ export default {
       }else{
         this.$store.commit('clearMessage')
         this.$store.commit('setMessage', 'Start date and purpose are required')
+      }
+    },
+
+    onCodeForm(){
+      if( this.$refs.codeForm.validate() ){
+        const query = {
+          action : 'step',
+          step: 'code',
+          code: this.code
+        }
+        this.$store.dispatch('sendOrderStep3', query)
       }
     },
 
