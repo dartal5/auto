@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         }
         case "getId": {
-            exit($_SESSION["userId"]);
+            exit(isset($_SESSION["userId"]) ? $_SESSION["userId"] : "-1");
             break;
         }
     }

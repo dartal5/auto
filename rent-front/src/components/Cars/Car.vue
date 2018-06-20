@@ -190,16 +190,19 @@ export default {
       if ( this.$refs.form.validate() && this.datePickerFrom ) {
         const user = this.$store.state.user.user
 
-        const order = {
-          action: 'step',
-          step: 'calculator',
-          id: this.id,
-          dateFrom: this.datePickerFrom,
-          dateTo: this.datePickerTo
+        if(user){
+            const order = {
+              action: 'step',
+              step: 'calc',
+              id: this.id,
+              dateFrom: this.datePickerFrom,
+              dateTo: this.datePickerTo
+            }
+            this.$store.dispatch('sendOrderStep1', order)
+        }else{
+            this.$store.commit('clearMessage')
+            this.$store.commit('setMessage', 'Please, sign in to make an order')
         }
-
-        this.$store.dispatch('sendOrderStep1')
-       
         
       }else{
         this.$store.commit('clearMessage')

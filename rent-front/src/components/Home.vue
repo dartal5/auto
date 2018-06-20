@@ -42,7 +42,6 @@ export default {
         })
       }
 
-      console.log(cars)
 
       return cars
     }

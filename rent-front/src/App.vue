@@ -65,7 +65,7 @@
         v-for="link in links"
         :key="link.title"
       >
-        <v-btn flat :to="link.src">
+        <v-btn flat :to="link.src" @click="link.title == 'Logout' ? onLogout() : ''">
           <v-icon left>{{ link.icon }}</v-icon>
           {{ link.title }}
         </v-btn>
@@ -130,7 +130,7 @@ export default {
           {
             icon: 'account_box',
             title: 'Logout',
-            src: '/Logout'
+            src: ''
           }
           ]
         } else {
@@ -148,13 +148,10 @@ export default {
             {
               icon: 'account_box',
               title: 'Login',
-              src: '/Login'
+              src: '/Login',
             }
           ]
         }
-    },
-    cars (){
-      return this.$store.getters.cars
     },
     carParams (){
       return this.$store.getters.carParams
@@ -185,6 +182,9 @@ export default {
     },
     clearMessage(){
       this.$store.commit('clearMessage')
+    },
+    onLogout(){
+      this.$store.dispatch('logout')
     }
   },
   name: 'App'
