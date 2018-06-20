@@ -73,4 +73,49 @@ class Login
         return(["status" => 1, "messages" => ["Logout successfuly"]]);
     }
 
+    static public function updateInfo($args)
+    {
+        $name = $args["name"];
+        $surname= $args["surname"];
+        $email = $args["email"];
+        $exp = $args["exp"];
+        $expna = $args["expna"];
+        $category = $args["category"];
+
+        $err_arr = ["status" => 0, "messages" => []];
+        if(empty($name))
+            $err_arr["messages"][] = "Empty name";
+        if(empty($surname))
+            $err_arr["messages"][] = "Empty surname";
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $err_arr["messages"][] = "Wrong email";
+        if(!preg_match("(0|[1-9][0-9]*)", $exp))
+            $err_arr["messages"][] = "Wrong exp";
+        if(!preg_match("(0|[1-9][0-9]*)", $expna))
+            $err_arr["messages"][] = "Wrong expna";
+        if($expna > $exp)
+            $err_arr["messages"][] = "expna > exp";
+        if(!in_array($category, array("A", "B", "C", "D")))
+            $err_arr["messages"][] = "Wrong category";
+        if(!empty($err_arr["messages"])) return $err_arr;
+
+        Database::changeClient($_SESSION["userId"], $name, $surname, $email, $exp, $expna, $category);
+        return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Update successfuly"]]);
+    }
+
+    static public function updatePass($args)
+    {
+        $new_pass = $args["newPass"];
+        $pass_repeat = $args["repeatPass"];
+
+        if(strlen($new_pass) < 6)
+            $err_arr["messages"][] = "Pass should be at least 6 chars";
+        if($new_pass !== $pass_repeat)
+            $err_arr["messages"][] = "Pass are not the same";
+        if(!empty($err_arr["messages"])) return $err_arr;
+
+        Database::changeClientPass($_SESSION["userId"], sha1($new_pass));
+        return(["status" => 1, "id" => $_SESSION["userId"], "messages" => ["Update successfuly"]]);
+    }
+
 }
