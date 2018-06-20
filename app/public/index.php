@@ -22,11 +22,11 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 //echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "1234@1234.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "12341234"]));
-echo json_encode(\Login\Login::login(["email" => "1234@1234.com", "pass" => "12341234"]));
+//echo json_encode(\Login\Login::login(["email" => "1234@1234.com", "pass" => "12341234"]));
 //\Login\Login::logout();
 
-echo json_encode(\Run\Run::step(["step" => "calc", "id" => "1", "dateFrom" => "2018-06-20", "dateTo" => "2018-06-20"]));
-echo json_encode(\Run\Run::step(["step" => "form"]));
+//echo json_encode(\Run\Run::step(["step" => "calc", "id" => "1", "dateFrom" => "2018-06-20", "dateTo" => "2018-06-20"]));
+//echo json_encode(\Run\Run::step(["step" => "form"]));
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
