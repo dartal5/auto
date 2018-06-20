@@ -105,11 +105,9 @@ class Main
         }
 
         if($args["complete"] == true) {
-            Db::connect();
             $id = $this->calc->getData()["id"];
             Db::changeCarStatus($id, 0);
             Db::addOrder($this->form->getData["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"], $id);
-            Db::close();
 
             unset($this->calc);
             unset($this->form);

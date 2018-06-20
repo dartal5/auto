@@ -141,5 +141,12 @@ class Database
         return $res;
     }
 
+    public static function changeClient($id)
+    {
+        Database::connect();
+
+        Database::close();
+    }
+
 
 }
