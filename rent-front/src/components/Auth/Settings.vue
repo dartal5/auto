@@ -132,7 +132,6 @@ export default {
             return this.$store.state.userInfo.driveExp
         },
         userInfo(){
-            console.log(this.$store.state.user.userInfo)
             return this.$store.state.user.userInfo
         }
         

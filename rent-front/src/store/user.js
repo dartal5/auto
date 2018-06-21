@@ -22,7 +22,7 @@ export default {
         }
     },
     actions: {     
-        registerUser({commit}, payload) {
+        registerUser({commit, dispatch}, payload) {
             const user = qs.stringify(payload)
             axios.post(api, user)
                 .then(response => {
