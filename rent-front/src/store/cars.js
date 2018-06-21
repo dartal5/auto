@@ -1,29 +1,46 @@
 import axios from 'axios'
+const api = 'http://localhost/auto/app/public/index.php'
 
 export default {
     state: {
         cars: [],
-          paramsToShow: [
-            'make', 'model', 'class_type', 'tran_type', 'type', 'fuel_type', 'price'
-          ]
+        userCars: [],
+        paramsToShow: [
+        'make', 'model', 'class_type', 'tran_type', 'type', 'fuel_type', 'price'
+        ]
     },
     mutations: {
-        setAllCars(state, payload) {
+        setCars(state, payload) {
             state.cars.push(payload)
+        },
+        setUserCars(state, payload) {
+            state.userCars.push(payload)
         }
     },
     actions: {
        getCars({commit}) {
-            axios.get('http://localhost/auto/app/public/index.php?action=getAllCars')
+            axios.get(api + '?action=getAllCars')
                  .then(response => {
-                     const cars = response.data
+                     const cars = response.data                  
                      for(let car in cars){
-                        commit('setAllCars', cars[car])
+                        commit('setCars', cars[car])
                      }
                  })
                  .catch(error => {
                      console.log(error)
                  })
+       },
+       getUserCars({commit}){
+            axios.get(api + '?action=getCarHistoryExtend')
+                .then(response => {
+                    const cars = response.data
+                    for(let car in cars){
+                        commit('setUserCars', cars[car])
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
        }
     },
     getters: {

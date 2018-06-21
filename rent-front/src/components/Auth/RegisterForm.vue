@@ -35,20 +35,18 @@
         :rules="reqRule"
         required
         ></v-select>
-        <v-select
-        :items="driveExp"
+        <v-text-field
         v-model="selectExp"
         label="Стаж водіння (у роках)"
         :rules="reqRule"
         required
-        ></v-select>
-        <v-select
-        :items="driveExp"
+        ></v-text-field>
+        <v-text-field
         v-model="selectExp2"
         label="Стаж водіння без аварій (у роках)"
         :rules="reqRule"
         required
-        ></v-select>
+        ></v-text-field>
                 
         <v-card-actions>
         <v-spacer></v-spacer>
@@ -104,10 +102,11 @@ export default {
                 surname: this.surname,
                 pass: this.pass,
                 email: this.email,
-                category: this.selectDrive.text,
-                exp: this.selectExp.text,
-                expna: this.selectExp2.text
+                category: this.selectDrive,
+                exp: this.selectExp,
+                expna: this.selectExp2
             }
+
 
             this.$store.dispatch('registerUser', user)
             

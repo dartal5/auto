@@ -6,6 +6,7 @@ import user from './user'
 import messages from './messages'
 import orders from './orders'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({

@@ -55,7 +55,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   :to="'/car/' + carById.id" 
-                  :disabled="!carById.status" 
+                  :disabled="!+carById.status" 
                   color="success"
                   @click.native.stop="onForm"
                 >Замовити</v-btn>
@@ -100,8 +100,8 @@
           <v-list two-line class="pt-0">
             <template>
 
-             <div class="status-message" :class="carById.status ? 'success' : 'error'">
-                  Статус - {{ carById.status  ? 'вільна' : 'зайнята' }}
+             <div class="status-message" :class="+carById.status ? 'success' : 'error'">
+                  Статус - {{ +carById.status  ? 'вільна' : 'зайнята' }}
               </div> 
              
               <v-list-tile

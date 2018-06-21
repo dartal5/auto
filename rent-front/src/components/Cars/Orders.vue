@@ -2,7 +2,7 @@
   <v-container grid-list-lg fluid>
     <v-layout row wrap>
       <v-flex
-        v-for="car in cars"
+        v-for="car in myCars"
         :key="car.id"
         md3
       >
@@ -13,11 +13,15 @@
             <div>
               <h3 class="">{{ car.make + ' ' + car.model }}</h3>
               <div>{{ car.info }}</div>
+              <div class="order-date">
+                Date of the lease:
+              </div>
+              <div>{{ car.from_date + ' - ' + car.to_date }}</div>
             </div>
           </v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn :to="'/car/' + car.id" color="success">Замовити</v-btn>
+            <v-btn :to="'/car/' + car.id" color="success">Open</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -28,20 +32,8 @@
 <script>
 export default {
   computed: {
-    cars () {
-      const filterObj = this.$route.query
-      let cars = this.$store.getters.cars
-      if(Object.keys(filterObj).length !== 0){
-        cars = cars.filter(item => {
-          for(let value in filterObj){
-            if( filterObj[value] !== null && filterObj[value] != item[value]){
-              return false
-            }
-          }
-          return true
-        })
-      }
-      return cars
+    myCars () {
+        return this.$store.state.cars.userCars
     }
   }
 }
@@ -65,5 +57,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.order-date{
+  margin-top: 15px;
+  font-weight: bolder;
 }
 </style>

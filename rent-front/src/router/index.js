@@ -5,6 +5,8 @@ import Car from '@/components/Cars/Car'
 import Register from '@/components/Auth/Register'
 import Login from '@/components/Auth/Login'
 import Settings from '@/components/Auth/Settings'
+import Orders from '@/components/Cars/Orders'
+import routerGuard from './routerGuard'
 
 Vue.use(Router)
 
@@ -36,6 +38,12 @@ export default new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/orders',
+      name: 'Orders',
+      component: Orders,
+      beforeEnter: routerGuard
     }
   ],
   mode: 'history'

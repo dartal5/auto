@@ -13,60 +13,84 @@
                     v-model="valid2"
                     >
                         <v-text-field
-                        v-model="name"
+                        v-model="userInfo.name"
+                        value="12321"
                         label="Name"
                         :rules="reqRule"
                         required
                         ></v-text-field>
                         <v-text-field
-                        v-model="surname"
+                        v-model="userInfo.surname"
                         label="Surname"
                         :rules="reqRule"
                         required
                         ></v-text-field>
                         <v-text-field
-                        v-model="pass"
-                        label="Password"
-                        :rules="passRules"
-                        type="password"
-                        required
-                        ></v-text-field>
-                        <v-text-field
-                        v-model="email"
+                        v-model="userInfo.email"
                         :rules="emailRules"
                         label="E-mail"
                         required
                         ></v-text-field>
                         <v-select
                         :items="driveCats"
-                        v-model="selectDrive"
+                        v-model="userInfo.category"
                         label="Водійське посвідчення"
                         :rules="reqRule"
                         required
                         ></v-select>
-                        <v-select
+                        <v-text-field
                         :items="driveExp"
-                        v-model="selectExp"
+                        v-model="userInfo.exp"
                         label="Стаж водіння (у роках)"
                         :rules="reqRule"
                         required
-                        ></v-select>
-                        <v-select
+                        ></v-text-field>
+                        <v-text-field
                         :items="driveExp"
-                        v-model="selectExp2"
+                        v-model="userInfo.expna"
                         label="Стаж водіння без аварій (у роках)"
                         :rules="reqRule"
                         required
-                        ></v-select>
+                        ></v-text-field>
                                 
                         <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn 
-                            class="success" 
-                            @click.native="onRegister"
-                            :disabled="!valid2"
-                            >
-                            Send
+                            <v-spacer></v-spacer>
+                            <v-btn 
+                                class="success" 
+                                @click.native="onUserInfo"
+                                :disabled="!valid2"
+                                >
+                                Change
+                            </v-btn>
+                        </v-card-actions>
+                    </v-form>
+
+                    <v-form
+                        class="pl-3 pr-3"
+                        v-model="valid3"
+                    >
+                         <v-text-field
+                            v-model="password"
+                            label="New password"
+                            :rules="passRules"
+                            type="password"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="password2"
+                            label="Repeat password"
+                            :rules="passRules"
+                            type="password"
+                            required
+                        ></v-text-field>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn 
+                                class="error" 
+                                @click.native="onPassword"
+                                :disabled="!valid3"
+                                >
+                                Change
                             </v-btn>
                         </v-card-actions>
                     </v-form>
@@ -91,13 +115,13 @@ export default {
                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
             ],
             valid2: false,
+            valid3: true,
+            password: '',
+            password2: '',
             name: '',
             email: '',
             pass: '',
-            surname: '',
-            selectDrive: null,
-            selectExp: null,
-            selectExp2: null
+            surname: ''
         }
     },
     computed: {
@@ -107,25 +131,38 @@ export default {
         driveExp() {
             return this.$store.state.userInfo.driveExp
         },
+        userInfo(){
+            console.log(this.$store.state.user.userInfo)
+            return this.$store.state.user.userInfo
+        }
         
     },
     methods: {
-        onRegister() {
-            const user = {
-                action: 'register',
-                name: this.name,
-                surname: this.surname,
-                pass: this.pass,
-                email: this.email,
-                category: this.selectDrive.text,
-                exp: this.selectExp.text,
-                expna: this.selectExp2.text
+        onUserInfo() {
+            const userInfo = {
+                action: 'updateInfo',
+                name: this.userInfo.name,
+                surname: this.userInfo.surname,
+                email: this.userInfo.email,
+                category: this.userInfo.category,
+                exp: this.userInfo.exp,
+                expna: this.userInfo.expna
             }
 
-            this.$store.dispatch('registerUser', user)
+            console.log(userInfo)
+
+            this.$store.dispatch('updateUser', userInfo)
             
 
             
+        },
+        onPassword() {
+            const password = {
+                action : 'updatePass',
+                newPass: this.password,
+                repeatPass: this.password2
+            }
+            this.$store.dispatch('updatePass', password)
         }
     }
     

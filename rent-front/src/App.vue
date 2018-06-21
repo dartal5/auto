@@ -57,17 +57,17 @@
       dark
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down" v-text="title"></v-toolbar-title>
       
       <v-spacer></v-spacer>
       <v-toolbar-items 
-        class="hidden-sm-and-down"
+        
         v-for="link in links"
         :key="link.title"
       >
         <v-btn flat :to="link.src" @click="link.title == 'Logout' ? onLogout() : ''">
           <v-icon left>{{ link.icon }}</v-icon>
-          {{ link.title }}
+          <span class="hidden-xs-only">{{ link.title }}</span>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -185,6 +185,13 @@ export default {
     },
     onLogout(){
       this.$store.dispatch('logout')
+    }
+  },
+  watch: {
+    'paramsModel.status'(val){
+      if(!val){
+        this.paramsModel.status = null
+      }
     }
   },
   name: 'App'
