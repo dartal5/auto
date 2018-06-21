@@ -4,8 +4,14 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {
+    /*
+     * send code to email
+     */
     static public function sendCode($email, $code)
     {
+        /*
+         * use phpmailer
+         */
         $mail = new PHPMailer;
         $mail->setFrom('SuperMegaDev@gmail.com', 'Auto');
         $mail->addAddress($email, 'My Friend');

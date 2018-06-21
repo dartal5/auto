@@ -3,6 +3,10 @@
 use Database\Database as Db;
 use Session\Session;
 
+/*
+ * class that saves client information
+ * and throw exception if not logged in
+ */
 class Form
 {
     private $data;
@@ -15,6 +19,9 @@ class Form
     public function set($args)
     {
         try {
+            /*
+             * try to get client with such id
+             */
             $data = Db::getClient($args["id"]);
 
             $this->data["userId"] = $args["id"];
