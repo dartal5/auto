@@ -12,6 +12,7 @@ class Main
     private $form;
     private $code;
 
+
     public function calc(array $args)
     {
         if(!isset($this->calc))
@@ -20,6 +21,10 @@ class Main
         }
         else
         {
+            /*
+             * calc is the first step so, we do not allow to make other steps
+             * so we unset them all
+             */
             unset($this->form);
             unset($this->code);
             unset($this->paym);
@@ -48,6 +53,9 @@ class Main
             }
             else throw new \Exception("___ Bad step form ___");
 
+            /*
+             * create code and send it right after saving form
+             */
             if(isset($this->calc) && isset($this->form))
             {
                 if(!isset($this->code))
@@ -73,6 +81,9 @@ class Main
 
     public function code(array $args)
     {
+        /*
+         * check if code is eq to actual code
+         */
         try {
         if(!(isset($this->calc) && isset($this->form) && isset($this->code)))
             throw new \Exception("___ Bad step code ___");
@@ -85,6 +96,9 @@ class Main
 
     public function paym()
     {
+        /*
+         * create paym config and return it
+         */
         try {
         if(!(isset($this->calc) && isset($this->form) && isset($this->code) && $this->code->except == true))
             throw new \Exception("___ Bad step paym ___");
@@ -106,6 +120,9 @@ class Main
 
         if($args["complete"] == true) {
             $id = $this->calc->getData()["id"];
+            /*
+             * adding order to database
+             */
             Db::changeCarStatus($id, 0);
             Db::addOrder($this->form->getData["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"], $id);
 

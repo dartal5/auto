@@ -2,6 +2,10 @@
 
 class Payment
 {
+    /*
+     * Liqpay script info
+     * for frontend
+     */
     static public function set($price)
     {
         try {
