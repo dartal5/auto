@@ -131,6 +131,8 @@ class Login
             $err_arr["messages"][] = "expna > exp";
         if(!in_array($category, array("A", "B", "C", "D")))
             $err_arr["messages"][] = "Wrong category";
+        if(!isset($_SESSION["userId"]))
+            $err_arr["messages"][] = "Not logged in"; 
         if(!empty($err_arr["messages"])) return $err_arr;
 
         /*
@@ -152,6 +154,8 @@ class Login
             $err_arr["messages"][] = "Pass should be at least 6 chars";
         if($new_pass !== $pass_repeat)
             $err_arr["messages"][] = "Pass are not the same";
+        if(!isset($_SESSION["userId"]))
+            $err_arr["messages"][] = "Not logged in"; 
         if(!empty($err_arr["messages"])) return $err_arr;
 
 

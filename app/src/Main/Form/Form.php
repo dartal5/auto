@@ -22,7 +22,7 @@ class Form
             /*
              * try to get client with such id
              */
-            $data = Db::getClient($args["id"]);
+            $data = Db::getClient($_SESSION["userId"]);
 
             $this->data["userId"] = $args["id"];
             $this->data["name"] = $data["name"];

@@ -25,12 +25,14 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 }
 
-//echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "abcdef@abcdef.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "abcdabcd"]));
-//echo $_SESSION["userId"];
-//\Login\Login::logout();
+//echo json_encode(\Login\Login::register(["name" => "alex", "surname" => "dym", "email" => "abe1111@abcdef.com", "exp" => 3, "expna" => 2, "category" => "B", "pass" => "abcdabcd1111"]));
 
-//echo json_encode(\Run\Run::step(["step" => "calc", "id" => "1", "dateFrom" => "2018-06-20", "dateTo" => "2018-06-20"]));
+//echo json_encode(\Run\Run::step(["step" => "calc", "id" => "1", "dateFrom" => "2018-06-28", "dateTo" => "2018-06-29"]));
 //echo json_encode(\Run\Run::step(["step" => "form"]));
+//echo json_encode(\Run\Run::step(["step" => "code", "code" => "T7KALH"]));
+//echo json_encode(\Run\Run::step(["step" => "paym"]));
+//echo json_encode(\Run\Run::step(["step" => "comp", "complete" => true]));
+
 //echo json_encode(\Login\Login::updateInfo(["name" => "Alex", "surname" => "dym", "email" => "1234@1234.com", "exp" => 3, "expna" => 2, "category" => "B"]));
 //echo json_encode(\Login\Login::updatePass(["newPass" => "123456", "repeatPass" => "123456"]));
 

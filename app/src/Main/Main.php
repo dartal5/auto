@@ -124,7 +124,7 @@ class Main
              * adding order to database
              */
             Db::changeCarStatus($id, 0);
-            Db::addOrder($this->form->getData["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"], $id);
+            Db::addOrder($_SESSION["userId"], $this->calc->getData()["dateFrom"], $this->calc->getData()["dateTo"], $id);
 
             unset($this->calc);
             unset($this->form);
